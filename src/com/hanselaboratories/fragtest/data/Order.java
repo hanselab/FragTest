@@ -32,4 +32,10 @@ public class Order {
 		
 		return true;
 	}
+	
+	public boolean setHandlingUnit(int newHandlingUnit) {
+		this._handlingUnit = newHandlingUnit;
+		
+		return true;
+	}
 }
