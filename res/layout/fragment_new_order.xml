@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/new_order_id_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_order_id_textview" />
+    
+    <EditText
+        android:id="@+id/new_order_id_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_order_id_edittext_hint"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/new_order_description_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_order_description" />
+    
+    <EditText
+        android:id="@+id/new_order_description_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_order_description_hint"
+        android:inputType="text" />
+    
+    <TextView
+        android:id="@+id/new_order_hu_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_order_hu_textview" />
+    
+    <EditText
+        android:id="@+id/new_order_hu_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_order_hu_hint" />
+
+    <Button
+        android:id="@+id/new_order_insert_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_order_insert_button_text" />
+
+</LinearLayout>
