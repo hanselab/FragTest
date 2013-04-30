@@ -49,6 +49,8 @@ public class DisplayOrderFragment extends Fragment {
 		
 		final EditText orderID = (EditText) rootView.findViewById(R.id.modify_order_id_edittext);
 		final EditText orderDescription = (EditText) rootView.findViewById(R.id.modify_order_description_edittext);
+		final EditText orderHU = (EditText) rootView.findViewById(R.id.modify_order_hu_edittext);
+		
 		DisplayOrderButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -58,7 +60,8 @@ public class DisplayOrderFragment extends Fragment {
 				Log.i("Hanselog", "set widget data");
 				Log.i("Hanselog", "ID: " + order.getID() + " Desc: " + order.getDescription());
 				orderID.setText(Integer.toString(order.getID()));
-				orderDescription.setText(order.getDescription());				
+				orderDescription.setText(order.getDescription());
+				orderHU.setText(Integer.toString(order.getHandlingUnit()));
 			}
 		});
 		

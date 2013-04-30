@@ -3,6 +3,11 @@ package com.hanselaboratories.fragtest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.hanselaboratories.fragtest.data.DatabaseHandler;
+import com.hanselaboratories.fragtest.data.Order;
 
 
 /**
@@ -22,13 +27,17 @@ import android.support.v4.app.FragmentActivity;
  * to listen for item selections.
  */
 public class ItemListActivity extends FragmentActivity
-        implements ItemListFragment.Callbacks {
+        implements ItemListFragment.Callbacks, NewOrderFragment.Callbacks,
+        			DisplayOrderFragment.Callbacks {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+	public static final String ARG_ITEM_ID = "item_id";
+	private static final String NEW_ORDER = "1";
+	private static final String DISPLAY_ORDER = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,24 +67,49 @@ public class ItemListActivity extends FragmentActivity
      */
     @Override
     public void onItemSelected(String id) {
-        if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
-            ItemDetailFragment fragment = new ItemDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
-                    .commit();
-
-        } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-            detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
-        }
+		if(mTwoPane) {
+			// In two-pane mode, show the detail view in this activity by
+			// adding or replacing the detail fragment using a
+			// fragment transaction.
+			if(id.equals(NEW_ORDER)) {
+				NewOrderFragment frgNewOrder = new NewOrderFragment();
+				getSupportFragmentManager().beginTransaction().replace(R.id.item_detail_container, frgNewOrder).commit();
+			}
+			if(id.equals(DISPLAY_ORDER)) {
+				DisplayOrderFragment frgDisplayOrder = new DisplayOrderFragment();
+				getSupportFragmentManager().beginTransaction().replace(R.id.item_detail_container, frgDisplayOrder).commit();
+			}
+		} else {
+			// In single-pane mode, simply start the detail activity
+			// for the selected item ID.
+			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
+			detailIntent.putExtra(ARG_ITEM_ID, id);
+			startActivity(detailIntent);
+		}
+    }
+	/*
+	 * Callback method from {@link NewOrderFragment}
+	 * @see com.hanselaboratories.fragtest01.NewOrderFragment.Callbacks#onInsertButtonClick(java.lang.String)
+	 */
+	@Override
+	public void onInsertOrderButtonClick(Order order) {
+		/*
+		 * Save data into device database
+		 */
+		Log.i("Hanselog", "Insert new order " + order.getID() + " into Orders table");
+		DatabaseHandler db = new DatabaseHandler(this);
+		db.addOrder(order);
+		
+		Log.i("Hanselog", "Writing Toast message for orderID inserted");
+		Toast.makeText(getApplicationContext(), "Order " + order.getID() + " inserted", Toast.LENGTH_SHORT).show();
+	}
+	
+    @Override
+    public Order onDisplayOrderButtonClick(String orderID) {
+		Log.i("Hanselog", "Loading order");
+		DatabaseHandler db = new DatabaseHandler(this);
+		Order order = db.getOrder(Integer.parseInt(orderID));
+		Log.i("Hanselog", "OrderID: " + order.getID() + "Descr: " + order.getDescription());
+		return order;
     }
 }

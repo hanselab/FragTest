@@ -5,23 +5,23 @@
     android:orientation="vertical" >
     
     <TextView
-        android:id="@+id/load_order_id_textview"
+        android:id="@+id/display_order_id_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/load_order_id_textview_text" />
+        android:text="@string/display_order_id_textview_text" />
     
     <EditText
-        android:id="@+id/load_order_id_edittext"
+        android:id="@+id/display_order_id_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/load_order_id_edittext_hint"
+        android:hint="@string/display_order_id_edittext_hint"
         android:inputType="number" />
     
     <Button
-        android:id="@+id/load_order_button"
+        android:id="@+id/display_order_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/load_order_button_text" />
+        android:text="@string/display_order_button_text" />
     
     <TextView
         android:id="@+id/modify_order_id_textview"

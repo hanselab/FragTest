@@ -4,7 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.hanselaboratories.fragtest.data.DatabaseHandler;
+import com.hanselaboratories.fragtest.data.Order;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -15,8 +20,13 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends FragmentActivity {
+public class ItemDetailActivity extends FragmentActivity 
+	implements NewOrderFragment.Callbacks, DisplayOrderFragment.Callbacks {
 
+	public static final String ARG_ITEM_ID = "item_id";
+	private static final String NEW_ORDER = "1";
+	private static final String DIPSLAY_ORDER = "2";
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +45,22 @@ public class ItemDetailActivity extends FragmentActivity {
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
-            ItemDetailFragment fragment = new ItemDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.item_detail_container, fragment)
-                    .commit();
+			// Create the detail fragment and add it to the activity
+			// using a fragment transaction.
+			Log.i("Hanselog", "Get intent from ItemListActivity");
+			Intent intent = getIntent();
+			String itemSelected = intent.getStringExtra(ARG_ITEM_ID);
+			Log.i("Hanselog", "itemSelected: " + itemSelected);
+			if(itemSelected.equals(NEW_ORDER)) {
+				Log.i("Hanselog", "Starting NewOrderFragment");
+				NewOrderFragment frgNewOrder = new NewOrderFragment();
+				getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, frgNewOrder).commit();
+			}
+			if(itemSelected.equalsIgnoreCase(DIPSLAY_ORDER)) {
+				Log.i("Hanselog", "Starting DisplayOrderFragment");
+				DisplayOrderFragment frgDisplayOrder = new DisplayOrderFragment();
+				getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, frgDisplayOrder).commit();
+			}
         }
     }
 
@@ -64,4 +80,24 @@ public class ItemDetailActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onInsertOrderButtonClick(Order order) {
+    	Log.i("Hanselog", "Insert new order " + order.getID() + " into Orders table");
+    	DatabaseHandler db = new DatabaseHandler(this);
+    	db.addOrder(order);
+    	
+    	Log.i("Hanselog", "Writing Toast message for orderID inserted");
+    	Toast.makeText(getApplicationContext(), "Order " + order.getID() + " inserted", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    public Order onDisplayOrderButtonClick(String orderID) {
+		Log.i("Hanselog", "Loading order");
+		DatabaseHandler db = new DatabaseHandler(this);
+		Order order = db.getOrder(Integer.parseInt(orderID));
+		Log.i("Hanselog", "OrderID: " + order.getID() + "Descr: " + order.getDescription());
+		return order;
+    }
 }
+

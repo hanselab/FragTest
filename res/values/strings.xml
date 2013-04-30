@@ -4,4 +4,24 @@
     <string name="app_name">FragTest</string>
     <string name="title_item_detail">Item Detail</string>
 
+    <string name="new_order_id_textview">Order ID</string>
+    <string name="new_order_id_edittext_hint">Insert new order code here</string>
+    <string name="new_order_description">Description</string>
+    <string name="new_order_description_hint">Insert description here</string>
+    <string name="new_order_hu_textview">HU</string>
+    <string name="new_order_hu_hint">Insert HU here</string>
+    <string name="new_order_insert_button_text">Insert</string>
+    
+    <string name="display_order_id_textview_text">Display Order ID</string>
+    <string name="display_order_id_edittext_hint">Insert order code here</string>
+    <string name="display_order_button_text">Display</string>
+    
+    <string name="modify_order_id_textview_text">OrderID</string>
+    <string name="modify_order_id_edittext_hint">Insert order here</string>
+    <string name="modify_order_description_textview_text">Description</string>
+    <string name="modify_order_description_edittext_hint">Insert description here</string>
+    <string name="modify_order_hu_textview_text">HU</string>
+    <string name="modify_order_hu_hint">Insert HU here</string>
+    <string name="modify_order_button_text">Modify</string>
+    
 </resources>
