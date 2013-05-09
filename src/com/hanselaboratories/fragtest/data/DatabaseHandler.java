@@ -69,13 +69,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 		Cursor cursor = db.query(TABLE_ORDERS, new String[] {KEY_ID, KEY_DESCRIPTION, KEY_HU}, 
 				KEY_ID + "=?", new String[] { String.valueOf(idOrder)}, null, null, null, null);
-		if(cursor != null)
+		if(cursor.getCount() > 0) {
 			cursor.moveToFirst();
-		
-		Order order = new Order(Integer.parseInt(cursor.getString(0)), 
+			Order order = new Order(Integer.parseInt(cursor.getString(0)), 
 				cursor.getString(1), Integer.parseInt(cursor.getString(2)));
-		
-		return order;
+
+			return order;
+		} else {
+			return null;
+		}
 	}
 
 }

@@ -109,7 +109,7 @@ public class ItemListActivity extends FragmentActivity
 		Log.i("Hanselog", "Loading order");
 		DatabaseHandler db = new DatabaseHandler(this);
 		Order order = db.getOrder(Integer.parseInt(orderID));
-		Log.i("Hanselog", "OrderID: " + order.getID() + "Descr: " + order.getDescription());
+		//Log.i("Hanselog", "OrderID: " + order.getID() + "Descr: " + order.getDescription());
 		return order;
     }
 }

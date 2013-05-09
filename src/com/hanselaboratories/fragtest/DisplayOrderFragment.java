@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hanselaboratories.fragtest.data.Order;
 
@@ -57,11 +58,20 @@ public class DisplayOrderFragment extends Fragment {
 			public void onClick(View v) {
 				Log.i("Hanselog", "Loading orderID: " + orderIDtoDisplay.getText().toString());
 				Order order = mCallbacks.onDisplayOrderButtonClick(orderIDtoDisplay.getText().toString());
-				Log.i("Hanselog", "set widget data");
-				Log.i("Hanselog", "ID: " + order.getID() + " Desc: " + order.getDescription());
-				orderID.setText(Integer.toString(order.getID()));
-				orderDescription.setText(order.getDescription());
-				orderHU.setText(Integer.toString(order.getHandlingUnit()));
+				if(order != null) {
+					Log.i("Hanselog", "set widget data");
+					Log.i("Hanselog", "ID: " + order.getID() + " Desc: " + order.getDescription());
+					orderID.setText(Integer.toString(order.getID()));
+					orderDescription.setText(order.getDescription());
+					orderHU.setText(Integer.toString(order.getHandlingUnit()));
+				} else {
+					Log.i("Hanselog", "No Order " + orderIDtoDisplay.getText() + " found!!");
+					Toast.makeText(getActivity(), "OrderID: " + orderIDtoDisplay.getText() + " not found!", Toast.LENGTH_LONG).show();
+					orderIDtoDisplay.setText(null);
+					orderID.setText(null);
+					orderDescription.setText(null);
+					orderHU.setText(null);
+				}
 			}
 		});
 		
